@@ -1,0 +1,46 @@
+#!/bin/sh
+set -eux
+
+startDockerDesktop() {
+  docker ps || open --background --hide -a Docker
+  until docker ps ; do sleep 5 ; done
+}
+
+startK3D() {
+  k3d cluster get k3s-default || k3d cluster create k3s-default --no-lb
+  until k3d cluster start --wait ; do sleep 5 ; done
+}
+
+startMiniKube() {
+    minikube start --driver=hyperkit --memory 8G --cpus 4 --disk-size=32GB
+
+    # change to use Google DNS
+    minikube ssh sudo resolvectl dns eth0 8.8.8.8 8.8.4.4
+    minikube ssh sudo resolvectl dns docker0 8.8.8.8 8.8.4.4
+    minikube ssh sudo resolvectl dns sit0 8.8.8.8 8.8.4.4
+    # minikube ssh sudo resolvectl dns vethdc4103a 8.8.8.8 8.8.4.4
+
+    sleep 3s
+}
+
+case ${1:-docker-desktop} in
+  d|dd|docker|docker-desktop|docker-for-desktop)
+    # Docker Desktop does not support RBAC
+    startDockerDesktop
+    kubectx docker-desktop
+    ;;
+  k|k3d|k3s)
+    # k3d does not support resource requests
+    startK3D
+    kubectx k3d-k3s-default
+  ;;
+    m|minikube)
+    startMiniKube
+    eval $(minikube -p minikube docker-env)
+    ;;
+  *)
+  echo "up $2 is not understood: [dd|k3s|minikube]" > /dev/stderr
+esac
+
+
+until kubectl cluster-info ; do sleep 10 ; done
