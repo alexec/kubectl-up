@@ -23,7 +23,7 @@ Option 1 - [Kubernetes on Docker Desktop](https://docs.docker.com/desktop/kubern
 Option 3 - K3D
 
 ```bash
-brew install kd3
+brew install k3d
 ```
 
 Option 3 - Minikube
