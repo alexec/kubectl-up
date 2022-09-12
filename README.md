@@ -14,7 +14,7 @@ export PATH=~/kubectl-up:$PATH ;# add to your ~/.bashrc or ~/.zshrc
 Usage:
 
 ```bash
-kubectl up docker-desktop ;# Docker Desktop must be installed
+kubectl up docker-desktop ;# Docker Desktop must be installed, this is the default
 ```
 
 ```bash
