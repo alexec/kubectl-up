@@ -24,7 +24,7 @@ startMiniKube() {
 }
 
 case ${1:-docker-desktop} in
-  d|dd|docker|docker-desktop|docker-for-desktop)
+  d|dd|docker-desktop)
     # Docker Desktop does not support RBAC
     startDockerDesktop
     kubectx docker-desktop

@@ -4,6 +4,9 @@ Start and stop local Kubernetes clusters.
 * K3D
 * MiniKube
 
+
+`kubectl up` will start and initialize a local cluster. `kubectl down` will stop local cluster.
+
 Installation:
 
 ```bash
@@ -11,16 +14,38 @@ git clone https://github.com/alexec/kubectl-up.git -o ~/kubectl-up
 export PATH=~/kubectl-up:$PATH ;# add to your ~/.bashrc or ~/.zshrc 
 ```
 
+Install Docker Desktop
+
+Install your local Kubernetes provider.
+
+Option 1 - [Kubernetes on Docker Desktop](https://docs.docker.com/desktop/kubernetes/).
+
+Option 3 - K3D
+
+```bash
+brew install kd3
+```
+
+Option 3 - Minikube
+
+```bash
+brew install minikube 
+```
+
 Usage:
 
 ```bash
-kubectl up docker-desktop ;# Docker Desktop must be installed, this is the default
+kubectl up docker-desktop ;# default
 ```
 
 ```bash
-kubectl up k3d ;# Docker Desktop and k3d must be installed using brew install kd3
+kubectl up k3d 
 ```
 
 ```bash
-kubectl up minikube ;# minikube must be installed
+kubectl up minikube
+```
+
+```bash
+kubectl down
 ```
