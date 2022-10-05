@@ -7,6 +7,7 @@ startDockerDesktop() {
 }
 
 startK3D() {
+  startDockerDesktop
   k3d cluster get k3s-default || k3d cluster create k3s-default --no-lb
   until k3d cluster start --wait ; do sleep 5 ; done
 }
